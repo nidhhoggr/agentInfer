@@ -1,11 +1,12 @@
 
-
+<pre>
     _                    _   ___        __           
    / \   __ _  ___ _ __ | |_|_ _|_ __  / _| ___ _ __ 
   / _ \ / _` |/ _ \ '_ \| __|| || '_ \| |_ / _ \ '__|
  / ___ \ (_| |  __/ | | | |_ | || | | |  _|  __/ |   
 /_/   \_\__, |\___|_| |_|\__|___|_| |_|_|  \___|_|   
         |___/                                        
+</pre>
 
 ### Inference Engine
 
@@ -38,7 +39,7 @@ Some key components of the inference engine:
 
 * the modules should be decoupled from the agentc and the inference engine and vice versa.
 
-### Preferred Modules
+##### Preferred Modules
 
 #### Emotion Module
 
