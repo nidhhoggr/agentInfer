@@ -12,7 +12,7 @@ class State
     private function _registerDependencies()
     {
         $this->logger = new Logger(get_class());
-        $this->models = ModelRegistry::getModels(
+        $this->models = ModelRegistry::fetchByRegistryKeys(
             array(
                 'Ai_fingerprints',
                 'Ai_state_snapshots'

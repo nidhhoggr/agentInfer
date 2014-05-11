@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/../config.php');
 
-require_once('vendors/SupraModel/SupraModel.class.php');
+require_once(dirname(__FILE__) . '/vendors/SupraModel/SupraModel.class.php');
 
 spl_autoload_register(function ($class) {
 
@@ -13,7 +13,7 @@ spl_autoload_register(function ($class) {
 
     foreach($dirs as $dir)
     {
-        $file = $dir . '/' . $class . '.class.php';
+        $file = dirname(__FILE__) . '/' . $dir . '/' . $class . '.class.php';
 
         if(file_exists($file))
         {
@@ -23,23 +23,39 @@ spl_autoload_register(function ($class) {
     }
 });
 
-foreach(glob('./models/*_model.class.php') as $filename)
+$models_dir = dirname(__FILE__) . '/models/';
+
+foreach(glob($models_dir . '*_model.class.php') as $filename)
 {
-    $model_filename = str_replace('./models/','',$filename);
+    $model_filename = str_replace($models_dir,'',$filename);
+
     $model_name = str_replace('.class.php','',$model_filename);
+
     $model_obj = new $model_name($connection_args);
-    ModelRegistry::registerModel($model_obj);
+
+    $model_key = str_replace('_model','',$model_name);
+
+    ModelRegistry::register($model_key, $model_obj);
 }
 
-$state = new State();
+$classesToRegister = array(
+    'State',
+    'IO_Buffer',
+    'IO_Processor',
+    'AgentInfer',
+);
 
-$state->init();
+foreach($classesToRegister as $class)
+{
+    $obj = new $class();
 
-$fingerPrint = $state->getStateByKey('fingerprint');
+    ObjectRegistry::register($class, $obj);
+}
 
-//$state->setStateByKey('randomness',array('this','is','random'));
+//lets not care about what was registered first
+foreach($classesToRegister as $class)
+{
+    $object = ObjectRegistry::getByRegistryKey($class);
 
-$randomness = $state->getStateByKey('randomness'); 
-var_dump($state);
-
-$state->takeSnapshot(); 
+    $object->init();
+}

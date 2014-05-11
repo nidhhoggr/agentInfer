@@ -7,7 +7,7 @@ class Logger
     {
         $this->logged_by = $logged_by;
 
-        $this->models = ModelRegistry::getModels(array(
+        $this->models = ModelRegistry::fetchByRegistryKeys(array(
             'Ai_logs'
         ));
     }
