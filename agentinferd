@@ -1,0 +1,17 @@
+#!/usr/bin/php
+<?php
+
+require_once(dirname(__FILE__) . '/core/bootload.php');
+
+$haltProcess = FALSE;
+
+while($haltProcess == FALSE)
+{
+    echo '...' . "\n";
+
+    $haltProcess = $state->isKilled();
+      
+    sleep(5);
+}
+
+$state->takeSnapshot();
