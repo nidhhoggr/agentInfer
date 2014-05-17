@@ -8,8 +8,13 @@ class IO_Processor
     public function init()
     {
         $this->State = ObjectRegistry::getByRegistryKey('State');
-        $default_processor_val = $this->State->getStateByKey('default_processor');
-        $this->processor = ModuleRegistry::load($default_processor_val);
+
+        $fingerprint = $this->State->getStateByKey('fingerprint');
+
+        $default_io_processor_row = $fingerprint['default_io_processor'];
+
+        $this->processor = ModuleRegistry::load($default_io_processor_row->value);
+
         $logger = new Logger(__CLASS__);
     }
 

@@ -30,6 +30,11 @@ class ModuleRegistry
     {
         $module_composition = explode('::',$module_name);
 
+        if(count($module_composition) !== 3)
+        {
+            Throw new Exception('Invalid module composition: '.$module_name);
+        }
+ 
         $brain_segment = $module_composition[0];
 
         $system_level = $module_composition[1];
@@ -46,9 +51,9 @@ class ModuleRegistry
 
     public static function isLoaded($brain_segment, $system_level, $module_name)
     {
-        $isLoaded = ( array_keys_exists($system_level, self::$modules[$brain_segment])
+        $isLoaded = ( array_key_exists($system_level, self::$modules[$brain_segment])
 
-        && (array_keys_exists($module_name,self::$modules[$brain_segment][$system_level]) );
+        && (array_key_exists($module_name,self::$modules[$brain_segment][$system_level]) ));
 
         return $isLoaded;
     }
@@ -61,7 +66,7 @@ class ModuleRegistry
         {
             case 'core':
                 $dir = dirname(__FILE__) . '/modules/';
-                break
+                break;
             case 'extend':
                 $dir = dirname(__FILE__) . '/../../modules/';
                 break;

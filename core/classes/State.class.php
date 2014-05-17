@@ -20,6 +20,9 @@ class State
         );
     }
   
+    /**
+    *  Store the fingerprints into the state by the key column
+    */
     private function _registerFingerprint()
     {
         $fingerprints = $this->models['Ai_fingerprints']->find();
@@ -28,7 +31,7 @@ class State
         
         foreach($fingerprints as $key => $fingerprint)
         {
-            $fingerprintArr[$key] = $fingerprint;
+            $fingerprintArr[$fingerprint->key] = $fingerprint;
         }
    
         $this->state['fingerprint'] = $fingerprintArr;
