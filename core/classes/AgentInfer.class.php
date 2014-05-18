@@ -16,7 +16,12 @@ class AgentInfer
    
     public function doProcessing()
     {
-        $this->buffer->readFrom(); 
+        $continue = $this->buffer->readFrom(); 
+
+        if(!$continue) 
+        {
+            $this->shutdown();
+        }
     }   
 
     public function shutdown()

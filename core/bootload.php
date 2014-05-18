@@ -36,8 +36,8 @@ foreach(glob($models_dir . '*_model.class.php') as $filename)
 
     ModelRegistry::register($model_key, $model_obj);
 }
-//load all of the modules now
 
+//load all of the modules now
 $modules_dir = dirname(__FILE__) . '/modules/';
 
 $module_dirs = array_filter(glob($modules_dir . '*'), 'is_dir');
@@ -74,7 +74,6 @@ foreach($classesToRegister as $class)
 
         $object->init();
 }
-
 
 foreach(ModuleRegistry::getRegistered() as $brain_segment => $module)
 {

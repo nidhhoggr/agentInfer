@@ -18,10 +18,17 @@ class IO_Buffer
 
         foreach($messages as $msg)
         {
+            if($msg->msg == "SHUTDOWN")
+            {
+                return FALSE;
+            }
+
             $response = $this->IO_Processor->processInput($msg->msg);
 
             $this->writeTo($response);
         }
+        
+        return TRUE;
     }
 
     public function writeTo($msg)
