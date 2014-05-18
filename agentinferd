@@ -13,6 +13,8 @@ while($haltProcess == FALSE)
 {
     echo '...' . "\n";
 
+    $agent->doProcessing();
+
     $haltProcess = $agent->hasShutdownSignal();
       
     sleep(5);

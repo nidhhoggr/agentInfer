@@ -7,7 +7,15 @@ class Language_module extends Ai_core_module
 
     public function init()
     {
-        $this->_register_models();
+        $this->State = ObjectRegistry::getByRegistryKey('State');
+
+        $fingerprint = $this->State->getStateByKey('fingerprint');
+
+        $default_language_row = $fingerprint['default_language'];
+
+        $model_dir = $default_language_row->value . '/';
+
+        $this->_register_models(dirname(__FILE__) . '/models/' . $model_dir);
     }
 
     public function perform($action_name, $input)

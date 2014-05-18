@@ -29,7 +29,7 @@ class IO_Processor
 
         try
         {
-            $response = $this->processor->process($input);
+            $response = $this->processor->perform('read', $input);
         }
         catch(Exception $e)
         {
@@ -37,5 +37,7 @@ class IO_Processor
         }
 
         $this->processing = FALSE;
+        
+        return $response;
     }
 }

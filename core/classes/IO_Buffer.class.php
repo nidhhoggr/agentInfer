@@ -14,12 +14,18 @@ class IO_Buffer
 
     public function readFrom()
     {
-        $readable = $this->models['Ai_io_buffer']->readNext();
-        $this->IO_Processor->processInput($readable);
+        $messages = $this->models['Ai_io_buffer']->fetchLatest('client');
+
+        foreach($messages as $msg)
+        {
+            $response = $this->IO_Processor->processInput($msg->msg);
+
+            $this->writeTo($response);
+        }
     }
 
-    public function writeTo($writeable)
+    public function writeTo($msg)
     {
-        $this->models['Ai_io_buffer']->write($writable);
+        $this->models['Ai_io_buffer']->submitMsg($msg, 'client');
     }
 }

@@ -32,9 +32,12 @@ abstract class Ai_core_module
 
     abstract public function install();
 
-    protected function _register_models()
+    protected function _register_models($models_dir = NULL)
     {
-        $models_dir = dirname(__FILE__) . '/models/';
+        if(is_null($models_dir))
+        {
+            $models_dir = dirname(__FILE__) . '/models/';
+        }
 
         foreach(glob($models_dir . '*_model.class.php') as $filename)
         {

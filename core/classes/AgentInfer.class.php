@@ -5,7 +5,7 @@ class AgentInfer
     public function init()
     {
         $this->state = ObjectRegistry::getByRegistryKey('State');
-        $this->processor = ObjectRegistry::getByRegistryKey('IO_Processor'); 
+        $this->buffer = ObjectRegistry::getByRegistryKey('IO_Buffer'); 
         $this->shutdownSignal = FALSE;
     }
 
@@ -13,13 +13,11 @@ class AgentInfer
     {
         return $this->state; 
     } 
-
-    public function process($input)
-    {
-        $response = $this->processor->processInput($input);
    
-        return $response;
-    }
+    public function doProcessing()
+    {
+        $this->buffer->readFrom(); 
+    }   
 
     public function shutdown()
     {

@@ -53,14 +53,6 @@ foreach($module_dirs as $module_dir)
     ModuleRegistry::register($module_obj);
 }
 
-foreach(ModuleRegistry::getRegistered() as $brain_segment => $module)
-{
-    foreach($module['core'] as $core_module)
-    {
-        $core_module->init(); 
-    } 
-}
-
 $classesToRegister = array(
     'State',
     'IO_Buffer',
@@ -78,7 +70,16 @@ foreach($classesToRegister as $class)
 //lets not care about what was registered first
 foreach($classesToRegister as $class)
 {
-    $object = ObjectRegistry::getByRegistryKey($class);
+        $object = ObjectRegistry::getByRegistryKey($class);
 
-    $object->init();
+        $object->init();
+}
+
+
+foreach(ModuleRegistry::getRegistered() as $brain_segment => $module)
+{
+    foreach($module['core'] as $core_module)
+    {
+        $core_module->init();
+    }
 }

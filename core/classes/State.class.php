@@ -2,6 +2,8 @@
 
 class State
 {
+    private $state = array('fingerprint'=>array()); 
+
     public function init()
     {
         $this->_registerDependencies();

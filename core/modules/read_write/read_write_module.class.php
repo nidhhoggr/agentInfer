@@ -18,8 +18,9 @@ class Read_write_module Extends Ai_core_module
     
     public function perform($action_name, $input)
     {
+        $action_method = "__" . $action_name;
 
-        
+        return $this->{$action_method}($input); 
     }
     
     public function evaluate($input)
@@ -47,4 +48,13 @@ class Read_write_module Extends Ai_core_module
     {
 
     }
+
+
+    private function __read($msg)
+    {
+        $result = "I read " . $msg;
+    
+        return $result;
+    }
+
 }
