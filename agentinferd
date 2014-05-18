@@ -5,11 +5,15 @@ require_once(dirname(__FILE__) . '/core/bootload.php');
 
 $haltProcess = FALSE;
 
+$state = ObjectRegistry::getByRegistryKey('State');
+
+$agent = ObjectRegistry::getByRegistryKey('AgentInfer');
+
 while($haltProcess == FALSE)
 {
     echo '...' . "\n";
 
-    $haltProcess = $state->isKilled();
+    $haltProcess = $agent->hasShutdownSignal();
       
     sleep(5);
 }

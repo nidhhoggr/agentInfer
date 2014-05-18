@@ -26,7 +26,7 @@ class ModuleRegistry
         }
     }
 
-    public static function load($module_name)
+    public static function get_module_composition($module_name)
     {
         $module_composition = explode('::',$module_name);
 
@@ -41,16 +41,13 @@ class ModuleRegistry
 
         $module_name = $module_composition[2];
 
-        if ( ! self::isLoaded($brain_segment, $system_level, $module_name))
-        {
-            self::invokeModule($brain_segment, $system_level, $module_name);
-        }
-
-        self::getModule($brain_segment, $system_level, $module_name);
+        return compact('brain_segment','system_level','module_name');
     }
 
-    public static function isLoaded($brain_segment, $system_level, $module_name)
+    public static function isRegistered($module_name)
     {
+        extract(self::get_module_compposition($module_name));
+
         $isLoaded = ( array_key_exists($system_level, self::$modules[$brain_segment])
 
         && (array_key_exists($module_name,self::$modules[$brain_segment][$system_level]) ));
@@ -58,32 +55,26 @@ class ModuleRegistry
         return $isLoaded;
     }
 
-    public static function getModuleDir($system_level)
+    public static function register(Ai_core_module $module_obj)
     {
-        $dir = null;
+        $module_name = $module_obj->getName();
 
-        switch($system_level)
-        {
-            case 'core':
-                $dir = dirname(__FILE__) . '/modules/';
-                break;
-            case 'extend':
-                $dir = dirname(__FILE__) . '/../../modules/';
-                break;
-        }
-        
-        return $dir;
+        $composition = self::get_module_composition($module_name);
+
+        extract($composition);
+
+        self::$modules[$brain_segment][$system_level][$module_name] = $module_obj;
     }
 
-    public static function invokeModule($brain_segment, $system_level, $module_name)
+    public static function getRegistered()
     {
-        require_once(self::getModuleDir($system_level) . $module_name . '/' . $module_name . '.class.php');
-
-        self::$modules[$brain_segment][$system_level][$module_name] = new $module_name();
+        return self::$modules;
     }
 
-    public static function getModule($brain_segment, $system_level, $module_name)
+    public static function getModule($module_name)
     {
+        extract(self::get_module_composition($module_name));
+
         $module = self::$modules[$brain_segment][$system_level][$module_name];
 
         return $module;

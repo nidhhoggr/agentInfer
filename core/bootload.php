@@ -7,8 +7,7 @@ spl_autoload_register(function ($class) {
 
     $dirs = array(
         'models',
-        'classes',
-        'modules'
+        'classes'
     );
 
     foreach($dirs as $dir)
@@ -36,6 +35,30 @@ foreach(glob($models_dir . '*_model.class.php') as $filename)
     $model_key = str_replace('_model','',$model_name);
 
     ModelRegistry::register($model_key, $model_obj);
+}
+//load all of the modules now
+
+$modules_dir = dirname(__FILE__) . '/modules/';
+
+$module_dirs = array_filter(glob($modules_dir . '*'), 'is_dir');
+
+foreach($module_dirs as $module_dir)
+{
+    $module_class_name = str_replace($modules_dir,'',$module_dir) . '_module';
+
+    require_once($module_dir . '/' . $module_class_name . '.class.php'); 
+
+    $module_obj = new $module_class_name();
+
+    ModuleRegistry::register($module_obj);
+}
+
+foreach(ModuleRegistry::getRegistered() as $brain_segment => $module)
+{
+    foreach($module['core'] as $core_module)
+    {
+        $core_module->init(); 
+    } 
 }
 
 $classesToRegister = array(

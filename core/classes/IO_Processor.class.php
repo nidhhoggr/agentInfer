@@ -13,7 +13,7 @@ class IO_Processor
 
         $default_io_processor_row = $fingerprint['default_io_processor'];
 
-        $this->processor = ModuleRegistry::load($default_io_processor_row->value);
+        $this->processor = ModuleRegistry::getModule($default_io_processor_row->value);
 
         $logger = new Logger(__CLASS__);
     }
