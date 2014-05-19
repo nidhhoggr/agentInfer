@@ -1,12 +1,7 @@
 <?php
 
-class Ai_io_buffer_model extends SupraModel
+class Ai_io_buffer_model extends Ai_core_model
 {
-    public function configure()
-    {
-        $this->setTable('ai_io_buffer');
-    }
-
     function getReciprocal($who)
     {
         if($who == "agent") return "client";

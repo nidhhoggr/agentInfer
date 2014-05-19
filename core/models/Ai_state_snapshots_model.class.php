@@ -1,12 +1,7 @@
 <?php
 
-class Ai_state_snapshots_model extends SupraModel
+class Ai_state_snapshots_model extends Ai_core_model
 {
-    public function configure()
-    {
-        $this->setTable('ai_state_snapshots');
-    }
-
     public function takeSnapshot($snapshot)
     {
         $this->snapshot = $snapshot;

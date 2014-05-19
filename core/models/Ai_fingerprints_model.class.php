@@ -1,9 +1,5 @@
 <?php
 
-class Ai_fingerprints_model extends SupraModel
+class Ai_fingerprints_model extends Ai_core_model
 {
-    public function configure()
-    {
-        $this->setTable('ai_fingerprints');
-    }
 }

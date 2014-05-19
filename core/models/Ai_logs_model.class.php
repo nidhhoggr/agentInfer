@@ -1,9 +1,5 @@
 <?php
 
-class Ai_logs_model extends SupraModel
+class Ai_logs_model extends Ai_core_model
 {
-    public function configure()
-    {
-        $this->setTable('ai_logs');
-    }
 }
