@@ -28,6 +28,8 @@
 
  * Recognized commands
     
+    * STARTUP: boot the machine from the chat client
+
     * SHUTDOWN: halt the machine and take a snapshot of the state
 
 ####Some key components of the inference engine:

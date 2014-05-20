@@ -13,6 +13,11 @@ if(!is_null($fetch))
 }
 elseif(!is_null($message))
 {
+    if($message == "STARTUP")
+    {
+        exec('./../../agentinferd');
+    }
+
     $msg = $buffer_model->submitMsg($message,'agent');
 
     echo json_encode($msg); 
