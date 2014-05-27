@@ -46,7 +46,7 @@ foreach($module_dirs as $module_dir)
 {
     $module_class_name = str_replace($modules_dir,'',$module_dir) . '_module';
 
-    require_once($module_dir . '/' . $module_class_name . '.class.php'); 
+    require_once($module_dir . '/' . $module_class_name . '.class.php');
 
     $module_obj = new $module_class_name();
 
@@ -70,9 +70,9 @@ foreach($classesToRegister as $class)
 //lets not care about what was registered first
 foreach($classesToRegister as $class)
 {
-        $object = ObjectRegistry::getByRegistryKey($class);
+    $object = ObjectRegistry::getByRegistryKey($class);
 
-        $object->init();
+    $object->init();
 }
 
 foreach(ModuleRegistry::getRegistered() as $brain_segment => $module)
@@ -80,5 +80,19 @@ foreach(ModuleRegistry::getRegistered() as $brain_segment => $module)
     foreach($module['core'] as $core_module)
     {
         $core_module->init();
+
+        $dependencies = $core_module->get_dependencies();
+
+        foreach($dependencies as $dependency)
+        {
+            $dep_arr = explode('::', $dependency);
+
+            if(count($dep_arr) !== 3)
+            {
+                Throw new exception('module dependecnies must contain a name, namespace and class as three sepaerate arguments');
+            }
+
+            $core_module->load_dependency($core_module, $dep_arr[0], $dep_arr[1], $dep_arr[2]);
+        }
     }
 }

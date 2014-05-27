@@ -5,23 +5,23 @@ abstract class Ai_core_module
 
     //store all of the associated models in an array
     protected $models;
-    
+
     //store an array of observers
     protected $observers = array();
 
     //the name of this module
     protected $module_name;
 
-    //perform initialization 
+    //perform initialization
     abstract public function init();
 
     //perform an action on a set of input data
     abstract public function perform($action_name, $input);
 
-    //evaulate input data 
+    //evaulate input data
     abstract public function evaluate($input);
 
-    //the exploration function 
+    //the exploration function
     abstract public function explore();
 
     //save the state
@@ -31,6 +31,8 @@ abstract class Ai_core_module
     abstract public function notify();
 
     abstract public function install();
+
+    protected $dependencies = array();
 
     protected function _register_models($models_dir = NULL)
     {
@@ -80,4 +82,31 @@ abstract class Ai_core_module
         }
     }
 
+    public function get_dependencies()
+    {
+        return $this->dependencies;
+    }
+
+    public function get_dependency_manager()
+    {
+        return $this->dependency_manager;
+    }
+
+    public function set_dependency_object($dependency, $dependency_object)
+    {
+        $this->dependency_manager[$dependency] = $dependency_object;
+    }
+
+    public function load_dependency(Ai_Core_Module $module, $dependency_name,$namespace,$class)
+    {
+        require_once(dirname(__FILE__) . '/../vendors/'. $dependency_name .'/autoloader.php');
+
+        require_once(dirname(__FILE__) . '/../vendors/'. $dependency_name .'/tests/bootstrap.php');
+
+        $namespace = str_replace('_','\\', $namespace);
+
+        $classObj = new $namespace();
+
+        $module->set_dependency_object($namespace . '::' . $class, $classObj);
+    }
 }
