@@ -1,0 +1,25 @@
+#!/usr/bin/env php
+<?php
+require_once(dirname(__FILE__) . '/bootload.php');
+
+$options = getopt("fm:");
+
+if(isset($options["f"]))
+{
+    $fetch_result = $buffer_model->fetchLatest('agent');
+
+    echo var_export($fetch_result, true); 
+}
+elseif(isset($options["m"]) && !empty($options["m"]))
+{
+  $message = $options["m"];
+
+  if($message == "STARTUP")
+    {
+        exec('./../../agentinferd');
+    }
+
+    $msg = $buffer_model->submitMsg($message,'agent');
+
+    echo var_export($msg, true); 
+}

@@ -23,6 +23,11 @@ class IO_Processor
         return $this->processing;
     }
 
+    public function getProcessed()
+    {
+        return $this->processor->getProcessed();
+    }
+
     public function processInput($input)
     {
         $this->processing = TRUE;

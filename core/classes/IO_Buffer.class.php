@@ -31,6 +31,11 @@ class IO_Buffer
         return TRUE;
     }
 
+    public function getProcessed()
+    {
+        return $this->IO_Processor->getProcessed();
+    }
+
     public function writeTo($msg)
     {
         $this->models['Ai_io_buffer']->submitMsg($msg, 'client');

@@ -4,9 +4,9 @@ class Memory_object_module extends Ai_core_module
 {
     protected $module_name = 'memory_object::core::memory_object';
 
-    public function init()
+    public function init($settings)
     {
-        $this->_register_models();
+        $this->_register_models(NULL, $settings);
     }
 
     public function perform($action_name, $input)

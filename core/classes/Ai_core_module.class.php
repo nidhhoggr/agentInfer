@@ -13,7 +13,7 @@ abstract class Ai_core_module
     protected $module_name;
 
     //perform initialization
-    abstract public function init();
+    abstract public function init($settings);
 
     //perform an action on a set of input data
     abstract public function perform($action_name, $input);
@@ -34,8 +34,10 @@ abstract class Ai_core_module
 
     protected $dependencies = array();
 
-    protected function _register_models($models_dir = NULL)
+    protected function _register_models($models_dir = NULL, $settings = NULL)
     {
+        if($settings) extract($settings);
+
         if(is_null($models_dir))
         {
             $models_dir = dirname(__FILE__) . '/models/';
@@ -43,6 +45,8 @@ abstract class Ai_core_module
 
         foreach(glob($models_dir . '*_model.class.php') as $filename)
         {
+            require_once($filename);
+            
             $model_filename = str_replace($models_dir,'',$filename);
 
             $model_name = str_replace('.class.php','',$model_filename);
@@ -50,6 +54,8 @@ abstract class Ai_core_module
             $model_obj = new $model_name($connection_args);
 
             $model_key = str_replace('_model','',$model_name);
+
+            $this->models[$model_name] = $model_obj;
 
             ModelRegistry::register($model_key, $model_obj);
         }

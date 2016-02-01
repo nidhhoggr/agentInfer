@@ -102,7 +102,7 @@ class MysqlSelection implements Selection {
        $fields = $this->sqlFields;
 
 
-        while($row = mysql_fetch_object($result)) {
+        while($row = mysqli_fetch_object($result)) {
 
             $sm = new stdClass();
  

@@ -4,7 +4,9 @@ class Read_write_module Extends Ai_core_module
 {
     protected $module_name = 'language::core::read_write';
 
-    public function init()
+    protected $processed;
+
+    public function init($settings)
     {
         //set the core language module as the parent module
         $this->parent_module = ModuleRegistry::getModule('language::core::language');
@@ -25,9 +27,14 @@ class Read_write_module Extends Ai_core_module
     
     public function evaluate($input)
     {
-
+        $this->processed = $this->parent_module->evaluate($input);
     }
-    
+
+    public function getProcessed() {
+
+        return $this->processed;
+    }
+
     public function explore()
     {
 
@@ -52,6 +59,8 @@ class Read_write_module Extends Ai_core_module
 
     private function __read($msg)
     {
+        $this->evaluate($msg);
+
         $result = "I read " . $msg;
     
         return $result;

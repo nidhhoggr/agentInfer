@@ -1,0 +1,34 @@
+#!/usr/bin/env php
+<?php
+require_once(dirname(__FILE__) . '/bootload.php');
+
+stream_set_blocking(STDIN, 0);
+ 
+const TIMEOUT_SECONDS = 3;
+ 
+do {
+
+  while (!empty($message = trim(fgets(STDIN)))) {
+
+    if($message == "STARTUP")
+    {
+      exec('./../../agentinferd');
+    }
+
+    $msg = $buffer_model->submitMsg($message,'agent');
+
+    if(!empty($msg)) {
+      echo var_export($msg, true);
+    }
+  }
+
+  $fetch_result = $buffer_model->fetchLatest('agent');
+
+  if(!empty($fetch_result))
+  {
+      echo var_export($fetch_result, true); 
+  }
+
+  sleep(3);
+
+} while(true); 

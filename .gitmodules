@@ -1,0 +1,3 @@
+[submodule "core/vendors/php-nlp-tools"]
+	path = core/vendors/php-nlp-tools
+	url = https://github.com/angeloskath/php-nlp-tools.git

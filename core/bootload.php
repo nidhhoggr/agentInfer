@@ -79,7 +79,7 @@ foreach(ModuleRegistry::getRegistered() as $brain_segment => $module)
 {
     foreach($module['core'] as $core_module)
     {
-        $core_module->init();
+        $core_module->init(compact('connection_args'));
 
         $dependencies = $core_module->get_dependencies();
 
@@ -96,3 +96,4 @@ foreach(ModuleRegistry::getRegistered() as $brain_segment => $module)
         }
     }
 }
+

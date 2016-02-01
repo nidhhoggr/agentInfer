@@ -13,10 +13,17 @@ class AgentInfer
     {
         return $this->state; 
     } 
-   
+
+    public function getProcessed()
+    {
+        return $this->processed;
+    }
+
     public function doProcessing()
     {
         $continue = $this->buffer->readFrom(); 
+
+        $this->processed = $this->buffer->getProcessed();
 
         if(!$continue) 
         {
