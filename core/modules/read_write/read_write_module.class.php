@@ -24,10 +24,26 @@ class Read_write_module Extends Ai_core_module
 
         return $this->{$action_method}($input); 
     }
-    
+
     public function evaluate($input)
     {
+        $this->evaluate_input($input);
+    }
+
+    public function evaluate_input($input)
+    {
         $this->processed = $this->parent_module->evaluate($input);
+    }
+
+    public function evaluate_question($content) {
+
+        $object_memory = ModuleRegistry::getModule('memory_object::core::memory_object');
+        
+        $result = $object_memory->models["Memory_object_question_model"]->findOneBy(array(
+            "content" => "name like '$content'"
+        ));
+
+        return $result;
     }
 
     public function getProcessed() {
@@ -56,14 +72,30 @@ class Read_write_module Extends Ai_core_module
 
     }
 
-
     private function __read($msg)
     {
-        $this->evaluate($msg);
+        $this->evaluate_input($msg);
 
         $result = "I read " . $msg;
     
         return $result;
     }
 
+    private function __write() {
+
+        $thought = $this->processed;
+
+        $statement_types = $thought["statement_types"];
+
+        foreach($thought["words_meta"] as $k=>$word) {
+            $words[] = key($word);
+        }
+
+        $content = implode(" ", $words);
+
+        if(in_array("question", $statement_types)) {
+
+            $this->evaluate_question($content);
+        }
+    }
 }

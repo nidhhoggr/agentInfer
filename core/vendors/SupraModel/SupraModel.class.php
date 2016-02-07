@@ -40,7 +40,7 @@ abstract class SupraModel {
 	$array_vars = array('dbname','dbhost','dbuser','dbpassword');
 
 	foreach($array_vars as $av) {
-	    if(empty($args[$av]))
+	    if(!isset($args[$av]))
 	        die("Must provide all 4 paramaters for a db connection");
 
             $this->$av = $args[$av];

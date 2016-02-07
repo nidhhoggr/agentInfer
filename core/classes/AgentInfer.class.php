@@ -9,6 +9,14 @@ class AgentInfer
         $this->shutdownSignal = FALSE;
     }
 
+    public function submitMsg($msg, $to) {
+        return $this->buffer->writeTo($msg, $to);
+    } 
+
+    public function getResponse($from) {
+        return $this->buffer->readFrom($from);
+    } 
+
     public function getState()
     {
         return $this->state; 
@@ -21,7 +29,7 @@ class AgentInfer
 
     public function doProcessing()
     {
-        $continue = $this->buffer->readFrom(); 
+        $continue = $this->buffer->readFrom("client"); 
 
         $this->processed = $this->buffer->getProcessed();
 

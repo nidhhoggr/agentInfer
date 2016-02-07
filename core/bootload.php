@@ -37,6 +37,8 @@ foreach(glob($models_dir . '*_model.class.php') as $filename)
     ModelRegistry::register($model_key, $model_obj);
 }
 
+
+
 //load all of the modules now
 $modules_dir = dirname(__FILE__) . '/modules/';
 
@@ -74,6 +76,19 @@ foreach($classesToRegister as $class)
 
     $object->init();
 }
+
+
+/*
+//now that the classes are loaded in ObjectRegistry we can init our modules
+foreach(ModuleRegistry::getRegistered() as $brain_segment => $modules)
+{
+    foreach($modules["core"] as $module_name => $module_obj) {
+        
+        $module_obj->init($connection_args);
+    }
+}
+ */
+
 
 foreach(ModuleRegistry::getRegistered() as $brain_segment => $module)
 {

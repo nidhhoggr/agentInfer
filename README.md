@@ -18,13 +18,11 @@
 
 ####Instructions
 
- * run install .sql and copy config.sample.php to config.php
+ * run install .sql
+ 
+ * copy config.sample.php to config.php and conigue config.php to use the respective database credentials
 
- * conigue config.php to use the respective database credentials
-
- * run the deamon from the command line <pre>./agentinferd</pre>
-
- * open up the chat_box client in a browser <pre>./clients/chat_box/index.php</pre>
+ * navigate to clients/cmd and run ./stream from shell.
 
  * Recognized commands
     
@@ -39,9 +37,13 @@
   * the state is a store of all of the current data being processed. 
   * it provides context that modules can be dependent upon.
 
+* Fingerprint
+
+  * stores unique values about the agent such as name age etc. A way to decouple from the fact storag.
+
 * Sense of Environment
 
-  * the default environment is a virtual agent using the chat box
+  * the default environment is the sreaming cmd php-cli script which processes STDIN and STDOUT from the shell
 
 * Self Actualization
 
@@ -62,9 +64,14 @@
 
 #### READ WRITE 
 
-* handle IO processing between the client and the core IO Buffer
+* handles IO processing between the client and the core IO Buffer
 
-* should have alot of oberserers attached
+* should have a lot of observers attached
+
+* uses NLP dependency to tokenize sentence and convery meaning and context of sentence.
+
+* Delegate processing to memory for answering questions
+
 
 #### Emotion Module
 
@@ -78,4 +85,8 @@
 
 #### Memory Object
 
-* should keep details memories about nouns to refer to for later decision making etc.
+* should keep detailed memories about nouns to consult for later decision making etc.
+
+* stores questions and answers and refers to them when processing input
+
+* in addition to answering question possibly from memory object fact table, it should also refer to it's own fingerprint

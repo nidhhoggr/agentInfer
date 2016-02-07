@@ -2,33 +2,45 @@
 <?php
 require_once(dirname(__FILE__) . '/bootload.php');
 
+$debugMode = false;
+
 stream_set_blocking(STDIN, 0);
- 
+
 const TIMEOUT_SECONDS = 3;
- 
+
+exec("pgrep agentinferd", $pids);
+
+if(empty($pids)) {
+    exec('./../../agentinferd > /dev/null 2>&1 & echo $!');
+}
+
 do {
 
-  while (!empty($message = trim(fgets(STDIN)))) {
+    $message = trim(fgets(STDIN));
 
-    if($message == "STARTUP")
+    if(!empty($message)) {
+
+        $msg = $buffer_model->submitMsg($message,'agent');
+
+        if(!empty($msg) && $debugMode) {
+            echo var_export($msg, true);
+        }
+    }
+
+    $fetch_result = $buffer_model->fetchLatest('agent');
+
+    if(!empty($fetch_result))
     {
-      exec('./../../agentinferd');
+        if($debugMode) {
+            echo var_export($fetch_result, true);
+        }
+        else {
+            $agentResponse = $fetch_result[0];
+
+            echo "Agent: " . $agentResponse->msg . "\r\n";
+        } 
     }
 
-    $msg = $buffer_model->submitMsg($message,'agent');
+    sleep(TIMEOUT_SECONDS);
 
-    if(!empty($msg)) {
-      echo var_export($msg, true);
-    }
-  }
-
-  $fetch_result = $buffer_model->fetchLatest('agent');
-
-  if(!empty($fetch_result))
-  {
-      echo var_export($fetch_result, true); 
-  }
-
-  sleep(3);
-
-} while(true); 
+} while($message !== "SHUTDOWN"); 

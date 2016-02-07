@@ -79,4 +79,11 @@ class ModuleRegistry
 
         return $module;
     }
+
+    public static function setModule($module_name, $module_obj)
+    {
+        extract(self::get_module_composition($module_name));
+
+        self::$modules[$brain_segment][$system_level][$module_name] = $module_obj;
+    }
 }

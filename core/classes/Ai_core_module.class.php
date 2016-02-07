@@ -51,7 +51,9 @@ abstract class Ai_core_module
 
             $model_name = str_replace('.class.php','',$model_filename);
 
-            $model_obj = new $model_name($connection_args);
+            var_dump(get_called_class(), $model_name, $settings);
+
+            $model_obj = new $model_name($settings["connection_args"]);
 
             $model_key = str_replace('_model','',$model_name);
 

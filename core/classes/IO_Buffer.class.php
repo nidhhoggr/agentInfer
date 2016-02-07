@@ -12,23 +12,31 @@ class IO_Buffer
         $this->IO_Processor = ObjectRegistry::getByRegistryKey('IO_Processor');
     }
 
-    public function readFrom()
+    public function readFrom($from)
     {
-        $messages = $this->models['Ai_io_buffer']->fetchLatest('client');
+        if($from === "client") {
 
-        foreach($messages as $msg)
-        {
-            if($msg->msg == "SHUTDOWN")
+            $messages = $this->models['Ai_io_buffer']->fetchLatest($from);
+
+            foreach($messages as $msg)
             {
-                return FALSE;
+                if($msg->msg == "SHUTDOWN")
+                {
+                    return FALSE;
+                }
+
+                $response = $this->IO_Processor->processInput($msg->msg);
+
+                $this->writeTo($response, "client");
             }
 
-            $response = $this->IO_Processor->processInput($msg->msg);
+            return TRUE;
 
-            $this->writeTo($response);
         }
-        
-        return TRUE;
+        else if($from === "agent") {
+
+            return $this->models['Ai_io_buffer']->fetchLatest($from);
+        }
     }
 
     public function getProcessed()
@@ -36,8 +44,10 @@ class IO_Buffer
         return $this->IO_Processor->getProcessed();
     }
 
-    public function writeTo($msg)
+    public function writeTo($msg, $to)
     {
-        $this->models['Ai_io_buffer']->submitMsg($msg, 'client');
+        $result = $this->models['Ai_io_buffer']->submitMsg($msg, $to);
+
+        return $result;
     }
 }

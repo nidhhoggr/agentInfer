@@ -34,7 +34,9 @@ class IO_Processor
 
         try
         {
-            $response = $this->processor->perform('read', $input);
+            $thought = $this->processor->perform('read', $input);
+        
+            $this->response = $this->processor->perform('write', $thought);
         }
         catch(Exception $e)
         {
@@ -43,6 +45,10 @@ class IO_Processor
 
         $this->processing = FALSE;
         
-        return $response;
+        return $thought;
+    }
+
+    public function getResponse() {
+        return $this->response;
     }
 }

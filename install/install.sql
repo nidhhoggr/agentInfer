@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.33, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.38, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: agent_infer
 -- ------------------------------------------------------
--- Server version	5.5.33-0+wheezy1
+-- Server version	5.5.46-0+deb7u1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -55,18 +55,12 @@ CREATE TABLE `ai_io_buffer` (
   `is_processed` tinyint(1) NOT NULL,
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `ai_io_buffer`
 --
-
-LOCK TABLES `ai_io_buffer` WRITE;
-/*!40000 ALTER TABLE `ai_io_buffer` DISABLE KEYS */;
-INSERT INTO `ai_io_buffer` VALUES (49,'Fuck you!','client','agent',1,'2014-05-18 04:44:04'),(50,'I read Fuck you!','agent','client',1,'2014-05-18 04:44:13'),(51,'I read Fuck you!','agent','client',1,'2014-05-18 04:44:28'),(52,'I read Are you there?','agent','client',1,'2014-05-18 04:44:36'),(53,'Hello','client','agent',1,'2014-05-18 04:44:55'),(54,'I read Hello','agent','client',1,'2014-05-18 04:44:59'),(55,'I read Hello','agent','client',1,'2014-05-18 04:45:16'),(56,'I read hello','agent','client',1,'2014-05-18 04:45:20'),(57,'I read hello','agent','client',1,'2014-05-18 04:45:28');
-/*!40000 ALTER TABLE `ai_io_buffer` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `ai_logs`
@@ -90,11 +84,6 @@ CREATE TABLE `ai_logs` (
 -- Dumping data for table `ai_logs`
 --
 
-LOCK TABLES `ai_logs` WRITE;
-/*!40000 ALTER TABLE `ai_logs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ai_logs` ENABLE KEYS */;
-UNLOCK TABLES;
-
 --
 -- Table structure for table `ai_state_snapshots`
 --
@@ -107,18 +96,8 @@ CREATE TABLE `ai_state_snapshots` (
   `snapshot` longtext NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ai_state_snapshots`
---
-
-LOCK TABLES `ai_state_snapshots` WRITE;
-/*!40000 ALTER TABLE `ai_state_snapshots` DISABLE KEYS */;
-INSERT INTO `ai_state_snapshots` VALUES (1,'YToxOntzOjExOiJmaW5nZXJwcmludCI7YToyOntpOjA7Tzo4OiJzdGRDbGFzcyI6Mzp7czoyOiJpZCI7czoxOiIxIjtzOjM6ImtleSI7czo0OiJuYW1lIjtzOjU6InZhbHVlIjtzOjExOiJhZ2VudCBpbmZlciI7fWk6MTtPOjg6InN0ZENsYXNzIjozOntzOjI6ImlkIjtzOjE6IjIiO3M6Mzoia2V5IjtzOjEwOiJvY2N1cGF0aW9uIjtzOjU6InZhbHVlIjtzOjc6ImFuYWx5c3QiO319fQ==','2014-05-11 03:55:18'),(2,'YToxOntzOjExOiJmaW5nZXJwcmludCI7YToyOntpOjA7Tzo4OiJzdGRDbGFzcyI6Mzp7czoyOiJpZCI7czoxOiIxIjtzOjM6ImtleSI7czo0OiJuYW1lIjtzOjU6InZhbHVlIjtzOjExOiJhZ2VudCBpbmZlciI7fWk6MTtPOjg6InN0ZENsYXNzIjozOntzOjI6ImlkIjtzOjE6IjIiO3M6Mzoia2V5IjtzOjEwOiJvY2N1cGF0aW9uIjtzOjU6InZhbHVlIjtzOjc6ImFuYWx5c3QiO319fQ==','2014-05-11 03:56:41'),(3,'YToxOntzOjExOiJmaW5nZXJwcmludCI7YToyOntpOjA7Tzo4OiJzdGRDbGFzcyI6Mzp7czoyOiJpZCI7czoxOiIxIjtzOjM6ImtleSI7czo0OiJuYW1lIjtzOjU6InZhbHVlIjtzOjExOiJhZ2VudCBpbmZlciI7fWk6MTtPOjg6InN0ZENsYXNzIjozOntzOjI6ImlkIjtzOjE6IjIiO3M6Mzoia2V5IjtzOjEwOiJvY2N1cGF0aW9uIjtzOjU6InZhbHVlIjtzOjc6ImFuYWx5c3QiO319fQ==','2014-05-11 03:56:58'),(4,'YTowOnt9','2014-05-11 04:09:39'),(5,'YToxOntzOjEwOiJyYW5kb21uZXNzIjthOjM6e2k6MDtzOjQ6InRoaXMiO2k6MTtzOjI6ImlzIjtpOjI7czo2OiJyYW5kb20iO319','2014-05-11 04:19:47'),(6,'YToxOntzOjEwOiJyYW5kb21uZXNzIjthOjM6e2k6MDtzOjQ6InRoaXMiO2k6MTtzOjI6ImlzIjtpOjI7czo2OiJyYW5kb20iO319','2014-05-11 04:20:37'),(7,'YToxOntzOjEwOiJyYW5kb21uZXNzIjthOjM6e2k6MDtzOjQ6InRoaXMiO2k6MTtzOjI6ImlzIjtpOjI7czo2OiJyYW5kb20iO319','2014-05-11 04:20:58'),(8,'YToxOntzOjEwOiJyYW5kb21uZXNzIjthOjM6e2k6MDtzOjQ6InRoaXMiO2k6MTtzOjI6ImlzIjtpOjI7czo2OiJyYW5kb20iO319','2014-05-11 04:21:42'),(9,'YToxOntzOjEwOiJyYW5kb21uZXNzIjthOjM6e2k6MDtzOjQ6InRoaXMiO2k6MTtzOjI6ImlzIjtpOjI7czo2OiJyYW5kb20iO319','2014-05-11 06:02:05'),(10,'YToxOntzOjEwOiJyYW5kb21uZXNzIjthOjM6e2k6MDtzOjQ6InRoaXMiO2k6MTtzOjI6ImlzIjtpOjI7czo2OiJyYW5kb20iO319','2014-05-18 04:40:59'),(11,'YToxOntzOjEwOiJyYW5kb21uZXNzIjthOjM6e2k6MDtzOjQ6InRoaXMiO2k6MTtzOjI6ImlzIjtpOjI7czo2OiJyYW5kb20iO319','2014-05-18 04:45:38');
-/*!40000 ALTER TABLE `ai_state_snapshots` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `language_en_dictionary`
@@ -329,6 +308,59 @@ LOCK TABLES `memory_object_fact` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `memory_object_question`
+--
+
+DROP TABLE IF EXISTS `memory_object_question`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `memory_object_question` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `by` enum('agent','client') NOT NULL,
+  `content` text NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `memory_object_question`
+--
+
+LOCK TABLES `memory_object_question` WRITE;
+/*!40000 ALTER TABLE `memory_object_question` DISABLE KEYS */;
+INSERT INTO `memory_object_question` VALUES (1,'client','What is your name','2016-02-07 02:16:47'),(2,'client','What is your job','2016-02-07 02:16:47'),(3,'client','Are you married','2016-02-07 02:18:02'),(4,'client','How old are you','2016-02-07 02:18:02');
+/*!40000 ALTER TABLE `memory_object_question` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `memory_object_question_answer`
+--
+
+DROP TABLE IF EXISTS `memory_object_question_answer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `memory_object_question_answer` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `question_id` int(8) NOT NULL,
+  `by` enum('agent','client') NOT NULL,
+  `content` text NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `memory_object_question_answer`
+--
+
+LOCK TABLES `memory_object_question_answer` WRITE;
+/*!40000 ALTER TABLE `memory_object_question_answer` DISABLE KEYS */;
+INSERT INTO `memory_object_question_answer` VALUES (1,1,'agent','My name is {AF_name}','2016-02-07 02:21:47'),(2,2,'agent','My job is a {AF_occupation}','2016-02-07 02:21:47'),(3,3,'agent','I am single and happy','2016-02-07 02:24:25'),(4,4,'agent','I am {AF_age}','2016-02-07 02:24:25');
+/*!40000 ALTER TABLE `memory_object_question_answer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `memory_objects`
 --
 
@@ -362,4 +394,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-05-18  1:21:44
+-- Dump completed on 2016-02-06 23:36:52

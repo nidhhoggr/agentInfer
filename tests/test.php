@@ -8,13 +8,12 @@ class AgentTest extends PHPUnit_Framework_TestCase
 {
     function setUp() {
       global $connection_args;
-      $this->buffer_model = new Ai_io_buffer_model($connection_args);
       $this->agent = ObjectRegistry::getByRegistryKey('AgentInfer'); 
     }
 
     function testSubmitMsgToAgent() {
         $message = "This, is a test?";
-        $msg = $this->buffer_model->submitMsg($message,'agent');
+        $msg = $this->agent->submitMsg($message,'agent');
         $this->assertTrue($message === $msg->msg);
     }
 
@@ -35,7 +34,7 @@ class AgentTest extends PHPUnit_Framework_TestCase
     }
 
     function testfetchMsgFromAgent() {
-        $fetch_result = $this->buffer_model->fetchLatest('agent');
+        $fetch_result = $this->agent->getResponse('agent');
         $this->assertTrue("I read This, is a test?" === $fetch_result[0]->msg);
     }
 }
