@@ -34,8 +34,10 @@ class IO_Processor
 
         try
         {
-            $thought = $this->processor->perform('read', $input);
-        
+            $this->processor->perform('read', $input);
+
+            $thought = $this->getProcessed();
+
             $this->response = $this->processor->perform('write', $thought);
         }
         catch(Exception $e)
@@ -48,7 +50,14 @@ class IO_Processor
         return $thought;
     }
 
+    /**
+     * getResponse
+     * 
+     * Update every time processInput is called
+     *
+     * @access public
+     */
     public function getResponse() {
-        return $this->response;
+        return @$this->response;
     }
 }

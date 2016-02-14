@@ -51,7 +51,10 @@ abstract class Ai_core_module
 
             $model_name = str_replace('.class.php','',$model_filename);
 
-            var_dump(get_called_class(), $model_name, $settings);
+            if(@$settings["debugMode"]) {
+
+                echo get_called_class() . "Initializing model: $model_name";
+            }
 
             $model_obj = new $model_name($settings["connection_args"]);
 

@@ -13,7 +13,7 @@ class Ai_io_buffer_model extends Ai_core_model
     {
         $msg_to = $this->getReciprocal($msg_from);
 
-        $latest = $this->findBy(array(
+        $msg = $this->findOneBy(array(
             'conditions'=>array(
                 "msg_from = '{$msg_from}'",
                 "msg_to = '{$msg_to}'",
@@ -21,20 +21,23 @@ class Ai_io_buffer_model extends Ai_core_model
             )
         ));
 
-        foreach($latest as $msg)
-        {
+        if($msg) {
+
             $this->id = $msg->id;
+            $this->msg = $msg->msg;
+            $this->msg_from = $msg->msg_from;
+            $this->msg_to = $msg->msg_to;
             $this->is_processed = TRUE;
             $this->save(); 
         }
 
-        return $latest;
+        return $msg;
     }
 
     //for the client
     public function submitMsg($msg, $msg_to)
     {
-        $this->id = null;
+        $this->id = NULL;
         $this->is_processed = FALSE;
         $this->msg = $msg;
         $this->msg_from = $this->getReciprocal($msg_to);

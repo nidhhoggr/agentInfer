@@ -1,24 +1,27 @@
 <?php
-require_once(dirname(__FILE__) . '/bootload.php');
+require_once(dirname(__FILE__) . '/../../bootload.php');
 
 $fetch = $_POST['fetch'];
 
 $message = $_POST['message'];
 
+$agent = ObjectRegistry::getByRegistryKey('AgentInfer');
+
+exec("pgrep agentinferd", $pids);
+
+if(empty($pids)) {
+    exec('./../../agentinferd > /dev/null 2>&1 & echo $!');
+}
+
 if(!is_null($fetch))
 {
-    $fetch_result = $buffer_model->fetchLatest('agent');
+    $response = $agent->getResponse();
 
-    echo json_encode($fetch_result); 
+    echo json_encode(array("msg"=>$response)); 
 }
 elseif(!is_null($message))
 {
-    if($message == "STARTUP")
-    {
-        exec('./../../agentinferd');
-    }
-
-    $msg = $buffer_model->submitMsg($message,'agent');
+    $msg = $agent->submitMsg($message,'agent');
 
     echo json_encode($msg); 
 }

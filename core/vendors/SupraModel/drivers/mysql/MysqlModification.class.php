@@ -12,7 +12,7 @@ class MysqlModification implements Modification {
         //for join tables
         if(array_key_exists('hasIdentifier',$args) && !$args['hasIdentifier']) {
             $this->_insert();
-            return true; //assume it works
+            return $this->model->lastInsertedId();
         }
 
         $identifier = $this->model->getTableIdentifier();

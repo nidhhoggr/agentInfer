@@ -16,6 +16,10 @@ class Read_write_module Extends Ai_core_module
 
         //attach the observer
         $this->attach_observer($object_memory);
+
+        $this->models = ModelRegistry::fetchByRegistryKeys(array(
+            'Ai_fingerprints'
+        ));
     }
     
     public function perform($action_name, $input)
@@ -39,11 +43,40 @@ class Read_write_module Extends Ai_core_module
 
         $object_memory = ModuleRegistry::getModule('memory_object::core::memory_object');
         
-        $result = $object_memory->models["Memory_object_question_model"]->findOneBy(array(
-            "content" => "name like '$content'"
+        $q_result = $object_memory->models["Memory_object_question_model"]->findOneBy(array(
+            "conditions" => "content like '$content'"
         ));
 
-        return $result;
+        if($q_result) { 
+
+            $a_result = $object_memory->models["Memory_object_question_answer_model"]->findOneBy(array(
+                "conditions" => "question_id = {$q_result->id}"
+            ));
+
+            if($a_result) {
+                
+                //does the answer contain an agent fingerprint
+                if(strstr($a_result->content,"{AF_")) {
+
+                    preg_match_all('/\{AF_([A-Za-z0-9 ]+?)\}/', $a_result->content, $out);
+
+                    $findgerprint_placeholder = $out[0][0];
+
+                    $fingerprint_key = $out[1][0];
+
+                    $fp_result = $this->models["Ai_fingerprints"]->findOneBy(array(
+                        "conditions" => "`key` like '$fingerprint_key'"
+                    ));
+
+                    $answer = str_replace($findgerprint_placeholder, $fp_result->value, $a_result->content);
+                }
+                else {
+                    $answer = $a_result->content;
+                }
+            }
+        }
+
+        return $answer;
     }
 
     public function getProcessed() {
@@ -75,10 +108,6 @@ class Read_write_module Extends Ai_core_module
     private function __read($msg)
     {
         $this->evaluate_input($msg);
-
-        $result = "I read " . $msg;
-    
-        return $result;
     }
 
     private function __write() {
@@ -95,7 +124,9 @@ class Read_write_module Extends Ai_core_module
 
         if(in_array("question", $statement_types)) {
 
-            $this->evaluate_question($content);
+            $toWrite = $this->evaluate_question($content);
         }
+
+        return $toWrite;
     }
 }

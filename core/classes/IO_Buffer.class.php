@@ -16,19 +16,20 @@ class IO_Buffer
     {
         if($from === "client") {
 
-            $messages = $this->models['Ai_io_buffer']->fetchLatest($from);
+            $msg = $this->models['Ai_io_buffer']->fetchLatest($from);
 
-            foreach($messages as $msg)
+            if(!$msg || empty($msg->msg)) return TRUE;
+
+            if($msg->msg == "SHUTDOWN")
             {
-                if($msg->msg == "SHUTDOWN")
-                {
-                    return FALSE;
-                }
-
-                $response = $this->IO_Processor->processInput($msg->msg);
-
-                $this->writeTo($response, "client");
+                return FALSE;
             }
+
+            $this->IO_Processor->processInput($msg->msg);
+
+            $response = $this->IO_Processor->getResponse();
+
+            $this->writeTo($response, "client");
 
             return TRUE;
 
@@ -37,6 +38,11 @@ class IO_Buffer
 
             return $this->models['Ai_io_buffer']->fetchLatest($from);
         }
+    }
+
+    public function getResponse()
+    {
+        return $this->readFrom("agent");
     }
 
     public function getProcessed()

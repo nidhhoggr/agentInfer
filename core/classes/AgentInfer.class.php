@@ -13,8 +13,8 @@ class AgentInfer
         return $this->buffer->writeTo($msg, $to);
     } 
 
-    public function getResponse($from) {
-        return $this->buffer->readFrom($from);
+    public function getResponse() {
+        return $this->buffer->getResponse();
     } 
 
     public function getState()
@@ -32,7 +32,7 @@ class AgentInfer
         $continue = $this->buffer->readFrom("client"); 
 
         $this->processed = $this->buffer->getProcessed();
-
+        
         if(!$continue) 
         {
             $this->shutdown();

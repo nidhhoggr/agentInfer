@@ -10,7 +10,7 @@
 
 ## AgentInfer
 
-###RELEASE 0.0.2
+###RELEASE 0.0.3
 
 * based on an inference engine of modular knowledge based components.
 
@@ -90,3 +90,19 @@
 * stores questions and answers and refers to them when processing input
 
 * in addition to answering question possibly from memory object fact table, it should also refer to it's own fingerprint
+
+
+=== 
+```
+± % ./stream                                                               !10415
+What is your name?
+Agent: My name is agent infer 
+What is your job?
+Agent: My job is a analyst 
+How old are you?
+Agent: I am 23 
+Are you married?
+Agent: I am single and happy 
+Blah!
+Agent:
+```

@@ -10,7 +10,7 @@ echo <<<EOF
         |___/
 
 @author Joe Persie
-@release 0.0.2
+@release 0.0.3
 EOF;
 
 require_once(dirname(__FILE__) . '/core/bootload.php');

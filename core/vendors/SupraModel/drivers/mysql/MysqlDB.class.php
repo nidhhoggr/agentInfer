@@ -184,15 +184,15 @@ class MysqlDB
      */
     function debugAndDie($query)
     {
-        echo($query . ' ' . mysqli_error());
-        die($query . ' ' . mysqli_error());
+        echo($query . ' ' . mysqli_error( $this->connection_link));
+        die($query . ' ' . mysqli_error( $this->connection_link));
     }
 
     function debugAndThrowError($query)
     {
-        echo($query . ' ' . mysqli_error());
+        echo($query . ' ' . mysqli_error( $this->connection_link));
         
-        Throw new \Exception($query . ' ' . mysqli_error());
+        Throw new \Exception($query . ' ' . mysqli_error( $this->connection_link));
     }
 
     /** Internal function to debug a MySQL query.\n

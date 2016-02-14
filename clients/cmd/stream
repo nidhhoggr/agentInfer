@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php
-require_once(dirname(__FILE__) . '/bootload.php');
+require_once(dirname(__FILE__) . '/../../bootload.php');
 
 $debugMode = false;
 
@@ -11,8 +11,10 @@ const TIMEOUT_SECONDS = 3;
 exec("pgrep agentinferd", $pids);
 
 if(empty($pids)) {
-    exec('./../../agentinferd > /dev/null 2>&1 & echo $!');
+  exec('./../../agentinferd > agent.log 2>&1 & echo $!');
 }
+
+$agent = ObjectRegistry::getByRegistryKey('AgentInfer');
 
 do {
 
@@ -20,24 +22,24 @@ do {
 
     if(!empty($message)) {
 
-        $msg = $buffer_model->submitMsg($message,'agent');
+        $msg = $agent->submitMsg($message,'agent');
 
         if(!empty($msg) && $debugMode) {
+            var_dump("MsgSubmitted");
             echo var_export($msg, true);
         }
     }
 
-    $fetch_result = $buffer_model->fetchLatest('agent');
+    $agentResponse = $agent->getResponse();
 
-    if(!empty($fetch_result))
+    if(!empty($agentResponse))
     {
         if($debugMode) {
-            echo var_export($fetch_result, true);
+            var_dump("AgentResponse");
+            echo var_export($agentResponse, true);
         }
         else {
-            $agentResponse = $fetch_result[0];
-
-            echo "Agent: " . $agentResponse->msg . "\r\n";
+            echo "Agent: {$agentResponse->msg} \r\n";
         } 
     }
 

@@ -1,13 +1,9 @@
 <?php
-require_once(dirname(__FILE__) . '/../config.php');
 require_once(dirname(__FILE__) . '/../bootload.php');
-require_once(dirname(__FILE__) . '/../core/classes/Ai_core_model.class.php');
-require_once(dirname(__FILE__) . '/../core/models/Ai_io_buffer_model.class.php');
 
-class AgentTest extends PHPUnit_Framework_TestCase
+class AgentTestBasicIO extends PHPUnit_Framework_TestCase
 {
     function setUp() {
-      global $connection_args;
       $this->agent = ObjectRegistry::getByRegistryKey('AgentInfer'); 
     }
 
@@ -31,11 +27,6 @@ class AgentTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(key($words[1]), "is");
         $this->assertEquals(key($words[2]), "a");
         $this->assertEquals(key($words[3]), "test");
-    }
-
-    function testfetchMsgFromAgent() {
-        $fetch_result = $this->agent->getResponse('agent');
-        $this->assertTrue("I read This, is a test?" === $fetch_result[0]->msg);
     }
 }
 
